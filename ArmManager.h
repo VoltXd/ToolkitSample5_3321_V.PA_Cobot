@@ -125,7 +125,7 @@
 
 #include <windows.h>
 #include <tchar.h>
-#include <KreonDefines.h>
+#include "KreonDefines.h"
 #include "VXElementsWrapper.h"
 
 
