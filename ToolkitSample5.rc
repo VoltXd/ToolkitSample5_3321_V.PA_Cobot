@@ -97,6 +97,11 @@ BEGIN
         MENUITEM "&Arm properties",             ID_KREONTOOLKIT_ARMPROPERTIES
         MENUITEM "S&canner properties",         ID_KREONTOOLKIT_SCANNERPROPERTIES
         MENUITEM "&License",                    ID_KREONTOOLKIT_LICENSE
+        POPUP "Positioning device"
+        BEGIN
+            MENUITEM "Cobot TX2-Touch",             ID_POSITIONINGDEVICE_COBOTTX2
+            MENUITEM "C-Track",                     ID_POSITIONINGDEVICE_CTRACK
+        END
     END
     POPUP "&Help"
     BEGIN

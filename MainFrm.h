@@ -10,6 +10,7 @@
 #endif // _MSC_VER > 1000
 
 #include "ChildView.h"
+#include "PA_Enums.hpp"
 
 
 #define		WM_SOCKET_MESSAGE		(WM_APP + 0x1000)
@@ -42,7 +43,10 @@ public:
 
 private:
 	bool	Init();
+	bool	m_bCobotCommunicationInitialized;
 	bool	m_bKreonInitialized;
+
+	PA_Enums::PositioningDevice positioningDevice;
 
 public:
 	bool	m_bPositioning;
@@ -64,6 +68,8 @@ protected:
 	afx_msg void OnKreonArmProperties();
 	afx_msg void OnKreonScannerProperties();
 	afx_msg void OnKreontoolkitLicense();
+	afx_msg void OnPositioningDeviceCobot();
+	afx_msg void OnPositioningDeviceCtrack();
 	afx_msg LRESULT OnDataSocket(WPARAM wParam, LPARAM lParam);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
