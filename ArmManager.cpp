@@ -19,6 +19,7 @@
 #include <string>
 
 #pragma warning(disable:4302)	// Disable cast void* to WORD warning
+#pragma warning(disable:4838)
 
 PA_Communication::CircularBuffer cobotRxBuffer(1024);
 PA_Communication::UdpSocketManager cobotSocketManager(1980, "192.168.0.254", 1980);
@@ -175,8 +176,8 @@ int	CArmManager::BeginAcquisition(int Mode)
 	else if (m_ArmType == PA_Enums::CobotTx2Touch)
 	{
 		std::string msg;
-		msg.append(0);
-		msg[0] = (unsigned char)PA_Enums::Acquire;
+		char msgChar[2] = { (unsigned char)PA_Enums::Acquire, '\0' };
+		msg.append(msgChar);
 		msg.append("\n");
 		int charSent = cobotSocketManager.Send(msg.data());
 		if (charSent > 0)
@@ -205,8 +206,8 @@ int	CArmManager::EndAcquisition()
 	else if (m_ArmType == PA_Enums::CobotTx2Touch)
 	{
 		std::string msg;
-		msg.append(0);
-		msg[0] = (unsigned char)PA_Enums::EndAcquire;
+		char msgChar[2] = { (unsigned char)PA_Enums::EndAcquire, '\0' };
+		msg.append(msgChar);
 		msg.append("\n");
 		int charSent = cobotSocketManager.Send(msg.data());
 		if (charSent > 0)
@@ -224,6 +225,14 @@ int	CArmManager::GetCurrentPosition(double* Matrix,bool* ButtonState)
 		return CArmManager::wrapper.GetCurrentPosition(Matrix, ButtonState);
 	else if (m_ArmType == PA_Enums::CobotTx2Touch)
 	{
+		std::string msg;
+		char msgChar[2] = { (unsigned char)PA_Enums::Position, '\0' };
+		msg.append(msgChar);
+		msg.append("\n");
+		int charSent = cobotSocketManager.Send(msg.data());
+		if (charSent <= 0)
+			return KR_ARM_FAILED;
+
 		while (isRetrievingPose) continue;
 
 		float x = pose[0];
@@ -247,6 +256,14 @@ int	CArmManager::GetTriggeredPosition(double* Matrix,bool* ButtonState)
 		return CArmManager::wrapper.GetTriggeredPosition(Matrix, ButtonState);
 	else if (m_ArmType == PA_Enums::CobotTx2Touch)
 	{
+		std::string msg;
+		char msgChar[2] = { (unsigned char)PA_Enums::Position, '\0' };
+		msg.append(msgChar);
+		msg.append("\n");
+		int charSent = cobotSocketManager.Send(msg.data());
+		if (charSent <= 0)
+			return KR_ARM_FAILED;
+
 		while (isRetrievingPose) continue;
 
 		float x = pose[0];

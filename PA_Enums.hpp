@@ -10,8 +10,8 @@ namespace PA_Enums
 
 	enum CobotMessage
 	{
-		Acquire = 0xFE,
-		EndAcquire = 0xEF,
-		Position = 0x01
+		Acquire = 0xFEU,
+		EndAcquire = 0xEFU,
+		Position = 0x01U
 	};
 }
