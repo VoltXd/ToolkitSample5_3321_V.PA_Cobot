@@ -476,9 +476,9 @@ void readBuffer(PA_Communication::CircularBuffer &cbRx)
 		PA_Protocol::retrievePose(pose);
 		PA_Positionning::tx2ToKreonTransform(pose);
 
-		float rx = pose[3];
-		float ry = pose[4];
-		float rz = pose[5];
+		float rx = pose[3] * EIGEN_PI / 180.0;
+		float ry = pose[4] * EIGEN_PI / 180.0;
+		float rz = pose[5] * EIGEN_PI / 180.0;
 
 		rotationMatrix = PA_Positionning::getRotationMatrix(rx, ry, rz);
 		isRetrievingPose = false;
